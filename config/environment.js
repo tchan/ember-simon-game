@@ -6,6 +6,10 @@ module.exports = function(environment) {
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
+    'ember-load': {
+      // This is the default value, if you don't set this opton
+      loadingIndicatorClass: 'loading'
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
