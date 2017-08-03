@@ -1,5 +1,5 @@
 @import 'ember-paper';
-
+@import 'ember-bootstrap/bootstrap';
 .loading {
   position: absolute;
   top: 50%;
@@ -41,14 +41,47 @@
   }
 }
 
-html, body
-{
-    height: 100vh;
+.app-container {
+    height:100vh;
+    background:#CDD7AF;
+    color:#fff;
 }
 
-.app-container {
-  margin: auto;
-  width: 80%;
+h1 {
+  margin-top: 0;
+  padding-top: 25px;
+}
+
+.circle-container {
   border: 1px solid black;
-  height: 100%;
+  width: 35%;
+  padding: 0;
+  margin: auto;
+}
+
+.center-row, .bottom-row {
+  border: 2px solid black;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-item {
+    background-color: tomato;
+    width: 80px;
+    height: 80px;
+    margin: 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 4em;
+    text-align: center;
+}
+
+.middle-row {
+  border: 2px solid black;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
