@@ -108,19 +108,34 @@ h1 {
 #blue {
   background-color: #272624;
   border: 0.4em solid #3498db;
+  cursor: pointer;
 }
 
 #red {
   background-color: #272624;
   border: 0.4em solid #c0392b;
+  cursor: pointer;
 }
 
 #green {
   background-color: #272624;
   border: 0.4em solid #27ae60;
+  cursor: pointer;
 }
 
 #yellow {
   background-color: #272624;
   border: 0.4em solid #f1c40f;
+  cursor: pointer;
+}
+
+.pulse {
+    -webkit-animation: pulsate 1s ease-out;
+    -webkit-animation-iteration-count: infinite;
+    opacity: 0.0
+}
+@-webkit-keyframes pulsate {
+    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+    50% {opacity: 1.0;}
+    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
 }
