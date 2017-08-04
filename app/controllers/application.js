@@ -2,16 +2,19 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   level: null,
-  isPulse: false,
+  bluePulse: false,
+  redPulse: false,
+  yellowPulse: false,
+  greenPulse: false,
 
   actions: {
-    clickBlue() {
-      let isPulse = this.get('isPulse');
-      this.set('isPulse', true);
-      var audio = new Audio('./simonSound1.mp3');
+    clickButton(colour) {
+      console.log('colour is', colour);
+      this.set(`${colour}Pulse`, true);
+      var audio = new Audio(`./${colour}.mp3`);
       audio.play();
       Ember.run.later(this, function() {
-          this.set("isPulse", false);
+          this.set(`${colour}Pulse`, false);
       }, 1080);
     }
   }

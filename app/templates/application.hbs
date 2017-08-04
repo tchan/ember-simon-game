@@ -4,23 +4,23 @@
 
   <div class="circle-container">
     <div class="center-row">
-      <div id="blue" class="flex-item {{if isPulse 'pulse'}}" {{action 'clickBlue'}}>
+      <div id="blue" class="flex-item {{if bluePulse 'pulse'}}" {{action 'clickButton' 'blue'}}>
 
       </div>
     </div>
 
     <div class="middle-row">
-      <div id="red" class="flex-item">
+      <div id="red" class="flex-item {{if redPulse 'pulse'}}" {{action 'clickButton' 'red'}}>
 
       </div>
       <span class="level-text"> {{level}} </span>
-      <div id="yellow" class="flex-item">
+      <div id="yellow" class="flex-item {{if yellowPulse 'pulse'}}" {{action 'clickButton' 'yellow'}}>
 
       </div>
     </div>
 
     <div class="bottom-row">
-      <div id="green" class="flex-item">
+      <div id="green" class="flex-item {{if greenPulse 'pulse'}}" {{action 'clickButton' 'green'}}>
 
       </div>
     </div>
