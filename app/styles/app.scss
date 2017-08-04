@@ -129,6 +129,10 @@ h1 {
   cursor: pointer;
 }
 
+#switchButton {
+  right: -20px;
+}
+
 .pulse {
     -webkit-animation: pulsate 1s ease-out;
     -webkit-animation-iteration-count: infinite;

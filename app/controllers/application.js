@@ -7,6 +7,8 @@ export default Ember.Controller.extend({
   yellowPulse: false,
   greenPulse: false,
 
+  hardMode: false,
+
   actions: {
     clickButton(colour) {
       console.log('colour is', colour);
@@ -16,6 +18,10 @@ export default Ember.Controller.extend({
       Ember.run.later(this, function() {
           this.set(`${colour}Pulse`, false);
       }, 1080);
+    },
+
+    switchMode() {
+      this.toggleProperty('hardMode');
     }
   }
 });

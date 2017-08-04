@@ -26,9 +26,16 @@
     </div>
 
     <div class="bottom-row">
+
       <div class="setting-item">
-        Switch
+          Value
+        <div id="switchButton">
+          {{#paper-switch value=hardMode onChange=(action "switchMode") noink=true}}
+          {{/paper-switch}}
+        </div>
+
       </div>
+
       <div class="setting-item">
         Start
       </div>
