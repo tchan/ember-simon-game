@@ -89,7 +89,7 @@ h1 {
 }
 
 .setting-item {
-    background-color: tomato;
+    // background-color: tomato;
     width: 80px;
     height: 40px;
     padding: 5px;
@@ -103,6 +103,18 @@ h1 {
   font-size: 2.8em;
   font-weight: bold;
 
+}
+
+.x-toggle-btn {
+  display: relative;
+  left: -66%;
+  top: 10%;
+  font-size: 1.2em;
+  // border: 2px solid black;
+}
+
+.button-text {
+  font-weight: bold;
 }
 
 #blue {
@@ -129,10 +141,6 @@ h1 {
   cursor: pointer;
 }
 
-#switchButton {
-  right: -20px;
-}
-
 .pulse {
     -webkit-animation: pulsate 1s ease-out;
     -webkit-animation-iteration-count: infinite;
@@ -142,4 +150,12 @@ h1 {
     0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
     50% {opacity: 1.0;}
     100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}
+
+.x-toggle-flip.x-toggle-btn:before {
+  background: #7FC6A6;
+}
+
+.x-toggle:checked + label > .x-toggle-flip.x-toggle-btn:after {
+  background: #FF3A19;
 }
