@@ -11,9 +11,7 @@ export default Ember.Controller.extend({
   hardMode: false,
 
   gameState: {
-      //sequence eg ['B', 'R', 'Y', 'G' ...]
-      // B: blue, R: Red, Y: Yellow, G: Green
-      sequence: [],
+      sequence: null,
       colours: ['blue', 'red', 'yellow', 'green'],
       userInput: [],
       hasStarted: false,
@@ -23,10 +21,8 @@ export default Ember.Controller.extend({
   actions: {
 
     start() {
-        // console.log('start button pressed');
-
         let gameState = this.get('gameState');
-        let level = gameState.level
+        this.set('gameState.level', 1);
         let sequence = [];
         let colours = gameState.colours;
 
@@ -34,15 +30,11 @@ export default Ember.Controller.extend({
         for (let i=0 ; i<20; i++) {
           let randomIndex = Math.round(Math.random()*3);
           sequence.push(colours[randomIndex]);
-          // console.log(sequence);
         }
         this.set('gameState.sequence', sequence);
         this.set('gameState.hasStarted', true);
-        this.set('gameState.level', 1);
-        console.log('populated sequence is', gameState.sequence);
 
         //play first sound of the array and wait for user input
-        // console.log(sequence[0]);
         let colour = sequence[0];
         this.set(`${colour}Pulse`, true);
         var audio = new Audio(`./${colour}.mp3`)
@@ -56,7 +48,8 @@ export default Ember.Controller.extend({
     clickButton(colour) {
       let hasStarted = this.get('gameState.hasStarted');
       let level = this.get('gameState.level');
-      //
+      let hardMode = this.get('hardMode');
+
       //playing around
       if (!hasStarted) {
         this.set(`${colour}Pulse`, true);
@@ -67,73 +60,88 @@ export default Ember.Controller.extend({
         }, 1080);
       }
       else if (hasStarted) {
-        // console.log('hasStarted')
         let userInput = this.get('gameState.userInput');
         let sequence = this.get('gameState.sequence');
         let wasCorrect = null;
 
         this.set(`${colour}Pulse`, true);
-        var audio = new Audio(`./${colour}.mp3`);
+        let audio = new Audio(`./${colour}.mp3`);
         audio.play();
         Ember.run.later(this, function() {
             this.set(`${colour}Pulse`, false);
         }, 1080);
 
         userInput.push(colour);
-        console.log('userInput', userInput);
 
         for (let i=0; i<userInput.length; i++) {
           if (userInput[i] !== sequence[i]) {
-            console.log('you lose, game restarting');
             this.set('gameState.userInput', []);
-            return ;
-            //restart code
+
+            //restart sequence
+            if (!hardMode) {
+              Ember.run.later(this, function() {
+                alert('That was wrong! The game will reset in a few seconds. You can try again as you are playing on Easy Mode');
+              }, 1000);
+
+              let time = 5080;
+              for (let i=0; i<level; i++) {
+                time = time+1250;
+                Ember.run.later(this, function () {
+                  this.set(`${sequence[i]}Pulse`, true);
+                  var audio = new Audio(`./${sequence[i]}.mp3`)
+                  audio.play();
+                  Ember.run.later(this, function() {
+                      this.set(`${sequence[i]}Pulse`, false);
+                  }, 1080);
+                }, time);
+              }
+            }
+
+            else {
+              this.set('gameState.hasStarted', false);
+              alert("You have lost, condolences.");
+            }
+
           }
         }
 
         //check if correct
         if (userInput.length === level) {
           let count = 0;
-          console.log('level is ', level);
           for (let i=0; i<level; i++) {
-            // console.log('colour', userInput[i], sequence[i]);
-            // console.log('i', i);
             if (userInput[i] !== sequence[i]) {
-              console.log('you lose, game restarting');
               this.set('gameState.userInput', []);
-              return ;
-              //restart code
+
             }
             else {
-
               count +=1;
               if (count === level) {
-                // console.log('all correct');
-                // console.log('count is', count);
+                if (count === 20) {
+                  alert('You won!');
+                  this.set('gameState.userInput', []);
+                  this.set('gameState.level', ':)');
+                  return;
+                }
                 wasCorrect = true;
               }
-              // level increases
-              // sounds play increases by 1
-              //reset user input
-
             }
           }
         }
 
-
+        // level increases
+        // sounds play increases by 1
+        //reset user input
         if (wasCorrect) {
-          // console.log('wasCorrect');
           wasCorrect = false;
           level +=1;
+          //reinitialze for next turn
           this.set('gameState.level', level);
           this.set('gameState.userInput', []);
-          // console.log('updated level', this.get('gameState.level'));
           let time = 1080;
           //play next sequence
           for (let i=0; i<level; i++) {
             time = time+1250;
             Ember.run.later(this, function () {
-              // console.log(i);
               this.set(`${sequence[i]}Pulse`, true);
               var audio = new Audio(`./${sequence[i]}.mp3`)
               audio.play();
@@ -143,10 +151,7 @@ export default Ember.Controller.extend({
             }, time);
           }
         }
-
       }
-
-
     },
 
     switchMode() {
