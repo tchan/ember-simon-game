@@ -13,6 +13,6 @@
 
 ## Demo
 
-[Live demo](http://http://ember-simon-game.surge.sh/)
+[Live demo](http://ember-simon-game.surge.sh/)
 
 ![ss](http://i.imgur.com/LX3TxFN.png)
