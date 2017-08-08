@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-
+  flashMessages: Ember.inject.service(),
   //classes for the pulse animation
   bluePulse: false,
   redPulse: false,
@@ -79,11 +79,9 @@ export default Ember.Controller.extend({
 
             //restart sequence
             if (!hardMode) {
-              Ember.run.later(this, function() {
-                alert('That was wrong! The game will reset in a few seconds. You can try again as you are playing on Easy Mode');
-              }, 1000);
-
-              let time = 5080;
+              let flashMessages = this.get('flashMessages');
+              flashMessages.info('Restarting!');
+              let time = 1080;
               for (let i=0; i<level; i++) {
                 time = time+1250;
                 Ember.run.later(this, function () {
