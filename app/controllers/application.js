@@ -2,18 +2,16 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   flashMessages: Ember.inject.service(),
-  //classes for the pulse animation
-  bluePulse: false,
-  redPulse: false,
-  yellowPulse: false,
-  greenPulse: false,
-
-  hardMode: false,
 
   gameState: {
       sequence: null,
-      colours: ['blue', 'red', 'yellow', 'green'],
       userInput: [],
+      hardMode: false,
+      colours: ['blue', 'red', 'yellow', 'green'],
+      bluePulse: false,
+      redPulse: false,
+      yellowPulse: false,
+      greenPulse: false,
       hasStarted: false,
       level: null
   },
@@ -36,11 +34,11 @@ export default Ember.Controller.extend({
 
         //play first sound of the array and wait for user input
         let colour = sequence[0];
-        this.set(`${colour}Pulse`, true);
+        this.set(`gameState.${colour}Pulse`, true);
         var audio = new Audio(`./${colour}.mp3`)
         audio.play();
         Ember.run.later(this, function() {
-            this.set(`${colour}Pulse`, false);
+            this.set(`gameState.${colour}Pulse`, false);
         }, 1080);
     },
 
@@ -48,15 +46,15 @@ export default Ember.Controller.extend({
     clickButton(colour) {
       let hasStarted = this.get('gameState.hasStarted');
       let level = this.get('gameState.level');
-      let hardMode = this.get('hardMode');
+      let hardMode = this.get('gameState.hardMode');
 
       //playing around
       if (!hasStarted) {
-        this.set(`${colour}Pulse`, true);
+        this.set(`gameState.${colour}Pulse`, true);
         var audio = new Audio(`./${colour}.mp3`);
         audio.play();
         Ember.run.later(this, function() {
-            this.set(`${colour}Pulse`, false);
+            this.set(`gameState.${colour}Pulse`, false);
         }, 1080);
       }
       else if (hasStarted) {
@@ -64,11 +62,11 @@ export default Ember.Controller.extend({
         let sequence = this.get('gameState.sequence');
         let wasCorrect = null;
 
-        this.set(`${colour}Pulse`, true);
+        this.set(`gameState.${colour}Pulse`, true);
         let audio = new Audio(`./${colour}.mp3`);
         audio.play();
         Ember.run.later(this, function() {
-            this.set(`${colour}Pulse`, false);
+            this.set(`gameState.${colour}Pulse`, false);
         }, 1080);
 
         userInput.push(colour);
@@ -85,11 +83,11 @@ export default Ember.Controller.extend({
               for (let i=0; i<level; i++) {
                 time = time+1250;
                 Ember.run.later(this, function () {
-                  this.set(`${sequence[i]}Pulse`, true);
+                  this.set(`gameState.${sequence[i]}Pulse`, true);
                   var audio = new Audio(`./${sequence[i]}.mp3`)
                   audio.play();
                   Ember.run.later(this, function() {
-                      this.set(`${sequence[i]}Pulse`, false);
+                      this.set(`gameState.${sequence[i]}Pulse`, false);
                   }, 1080);
                 }, time);
               }
@@ -140,11 +138,11 @@ export default Ember.Controller.extend({
           for (let i=0; i<level; i++) {
             time = time+1250;
             Ember.run.later(this, function () {
-              this.set(`${sequence[i]}Pulse`, true);
+              this.set(`gameState.${sequence[i]}Pulse`, true);
               var audio = new Audio(`./${sequence[i]}.mp3`)
               audio.play();
               Ember.run.later(this, function() {
-                  this.set(`${sequence[i]}Pulse`, false);
+                  this.set(`gameState.${sequence[i]}Pulse`, false);
               }, 1080);
             }, time);
           }
@@ -153,7 +151,7 @@ export default Ember.Controller.extend({
     },
 
     switchMode() {
-      this.toggleProperty('hardMode');
+      this.toggleProperty('gameState.hardMode');
     }
   }
 });

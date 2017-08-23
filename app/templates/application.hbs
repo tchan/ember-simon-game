@@ -4,23 +4,23 @@
 <p class="text-center"><a href="https://github.com/tchan/ember-simon-game">View Source</a></p>
   <div class="circle-container">
     <div class="center-row">
-      <div id="blue" class="flex-item {{if bluePulse 'pulse'}}" {{action 'clickButton' 'blue'}}>
+      <div id="blue" class="flex-item {{if gameState.bluePulse 'pulse'}}" {{action 'clickButton' 'blue'}}>
 
       </div>
     </div>
 
     <div class="middle-row">
-      <div id="red" class="flex-item {{if redPulse 'pulse'}}" {{action 'clickButton' 'red'}}>
+      <div id="red" class="flex-item {{if gameState.redPulse 'pulse'}}" {{action 'clickButton' 'red'}}>
 
       </div>
       <span class="level-text"> {{gameState.level}} </span>
-      <div id="yellow" class="flex-item {{if yellowPulse 'pulse'}}" {{action 'clickButton' 'yellow'}}>
+      <div id="yellow" class="flex-item {{if gameState.yellowPulse 'pulse'}}" {{action 'clickButton' 'yellow'}}>
 
       </div>
     </div>
 
     <div class="bottom-row">
-      <div id="green" class="flex-item {{if greenPulse 'pulse'}}" {{action 'clickButton' 'green'}}>
+      <div id="green" class="flex-item {{if gameState.greenPulse 'pulse'}}" {{action 'clickButton' 'green'}}>
 
       </div>
     </div>
@@ -28,7 +28,7 @@
     <div class="bottom-row">
 
       <div class="setting-item">
-          {{#x-toggle value=value size='large' showLabels=true onToggle=(action (mut hardMode)) as |toggle|}}
+          {{#x-toggle value=value size='large' showLabels=true onToggle=(action (mut gameState.hardMode)) as |toggle|}}
             {{toggle.switch theme='flip' onLabel='Hard' offLabel='Easy'}}
             {{/x-toggle}}
       </div>
