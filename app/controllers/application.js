@@ -73,6 +73,7 @@ export default Ember.Controller.extend({
 
         for (let i=0; i<userInput.length; i++) {
           if (userInput[i] !== sequence[i]) {
+            //reset userInput if incorrect
             this.set('gameState.userInput', []);
 
             //restart sequence
@@ -105,22 +106,17 @@ export default Ember.Controller.extend({
         if (userInput.length === level) {
           let count = 0;
           for (let i=0; i<level; i++) {
-            if (userInput[i] !== sequence[i]) {
-              this.set('gameState.userInput', []);
-
-            }
-            else {
-              count +=1;
-              if (count === level) {
-                if (count === 20) {
-                  alert('You won!');
-                  this.set('gameState.userInput', []);
-                  this.set('gameState.level', ':)');
-                  return;
-                }
-                wasCorrect = true;
+            count +=1;
+            if (count === level) {
+              if (count === 20) {
+                alert('You won!');
+                this.set('gameState.userInput', []);
+                this.set('gameState.level', ':)');
+                return;
               }
+              wasCorrect = true;
             }
+
           }
         }
 
